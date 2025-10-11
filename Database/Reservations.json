@@ -1,0 +1,74 @@
+[
+    {
+        "reservationId": 1,
+        "flightNumber": 10,
+        "seatNumber": 10,
+        "passengerid" : 33,
+        "payment": {
+            "method": "cash",
+            "amount": 2000,
+            "details": "paid at counter"
+        },
+        "checkIn" : "Not yet"
+    },
+    {
+        "reservationId": 2,
+        "flightNumber": 10,
+        "seatNumber": 11,
+        "passengerid" : 34,
+        "payment": {
+            "method": "credit_card",
+            "amount": 2200,
+            "details": "visa **** 1234"
+        },
+        "checkIn" : "Not yet"
+    },
+    {
+        "reservationId": 3,
+        "flightNumber": 10,
+        "seatNumber": 12,
+        "passengerid" : 34,
+        "payment": {
+            "method": "debit_card",
+            "amount": 1800,
+            "details": "mastercard **** 4321"
+            },
+        "checkIn" : "Not yet"
+    },
+    {
+        "reservationId": 4,
+        "flightNumber": 11,
+        "seatNumber": 1,
+        "passengerid" : 33,
+        "payment": {
+            "method": "paypal",
+            "amount": 2500,
+            "details": "PP-2025-0001"
+        },
+        "checkIn" : "Not yet"
+    },
+    {
+            "reservationId": 5,
+            "flightNumber": 11,
+            "seatNumber": 2,
+            "passengerid" : 35,
+            "payment": {
+                "method": "cash",
+                "amount": 2100,
+                "details": "paid at counter"
+            },
+        "checkIn" : "Not yet"
+    },
+    {
+            "reservationId": 6,
+            "flightNumber": 12,
+            "seatNumber": 20,
+            "passengerid" : 35,
+            "payment": {
+                "method": "voucher",
+                "amount": 1500,
+                "details": "promo SPRING25"
+            },
+        "checkIn" : "Not yet"
+    }
+    ]

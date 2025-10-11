@@ -1,0 +1,44 @@
+[
+    {
+        "email": "menna@gmail.com",
+        "id": 1,
+        "name": "Menna",
+        "password": "150704",
+        "role": "admin"
+    },
+    {
+        "email": "john@gmail.com",
+        "id": 2,
+        "name": "john",
+        "password": "511",
+        "role": "agent"
+    },
+    {
+        "email": "charlie@gmail.com",
+        "id": 3,
+        "name": "Charlie",
+        "password": "182",
+        "role": "admin"
+    },
+    {
+        "email": "omar@email.com",
+        "id": 52,
+        "name": "Omar",
+        "password": "1234",
+        "role": "admin"
+    },
+    {
+        "email": "ahmed@gmail.com",
+        "id": 33,
+        "name": "ahmed",
+        "password": "182",
+        "role": "passenger"
+    },
+    {
+        "email": "hassan@email.com",
+        "id": 34,
+        "name": "Hassan",
+        "password": "1234",
+        "role": "passenger"
+    }
+]

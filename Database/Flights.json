@@ -1,0 +1,25 @@
+[
+    {
+        "aircraftModel": "Boeing 737",
+        "arrivalTime": "2025-10-05",
+        "crewIDs": [
+            15,
+            18
+        ],
+        "departureTime": "2025-10-03",
+        "destination": "Paris",
+        "flightNumber": 10,
+        "origin": "Cairo",
+        "status": "scheduled"
+    },
+    {
+        "aircraftModel": "Airbus A320",
+        "arrivalTime": "2025-10-07",
+        "crewIDs": [],
+        "departureTime": "2025-10-06",
+        "destination": "London",
+        "flightNumber": 10,
+        "origin": "New York",
+        "status": "delayed"
+    }
+]
