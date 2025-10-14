@@ -33,9 +33,9 @@ public:
 
 // ============================ Reservation Class ====================== //
 class Reservation{
-    friend class ReservationSystem;
+    // friend class ReservationSystem;
+    friend class CheckinSystem;
 private:
-    static int reservationCount;
     int reservationId; 
 
     std::shared_ptr<Passenger> passenger;
@@ -44,20 +44,27 @@ private:
     int seatNum;
 
 public:
+    static int reservationCount;
+    std::shared_ptr<Passenger> getPassenger() const { return passenger; }
+    std::shared_ptr<Flight> getFlight() const { return flight; }
+
 
     Reservation(int reservationId, const std::shared_ptr<Passenger>& p, const std::shared_ptr<Flight>& f,
         int s, std::string& method, std::string& details, int amount);
 
+    ~Reservation();
 
     void modifyReservation(int resid, int s) ;
     void confirmReservation() const;
     void cancelReservation();
     void displayReservation() const;
-    nlohmann::json getReservationJson() const;
 
     // -------- Getters and Setters --------- //
     int getReservationId(){
         return this->reservationId;
+    }
+    int getSeatNo() const {
+        return seatNum;
     }
     void setReservationId(int r){
         this->reservationId = r;
@@ -82,7 +89,7 @@ class ReservationSystem{
     public:
 
     ReservationSystem(FlightSystem& fs, UserSystem& us);
-    ~ReservationSystem() = default;
+    ~ReservationSystem();
 
     std::shared_ptr<Reservation> getReservationById(int resId);
 

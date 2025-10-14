@@ -206,14 +206,14 @@ FlightSystem::FlightSystem() {
 }
 
 // -------------------- Destructor : Saves flight data to JSON file -------------------- //
-FlightSystem::~FlightSystem() {
-    nlohmann::json jArray = nlohmann::json::array();
-    for (auto& flight : flights) {
-        jArray.push_back(flight->getFlightJson());
-    }
-    std::ofstream outFile("database/Flights.json");
-    outFile << jArray.dump(4);
-}
+// FlightSystem::~FlightSystem() {
+//     nlohmann::json jArray = nlohmann::json::array();
+//     for (auto& flight : flights) {
+//         jArray.push_back(flight->getFlightJson());
+//     }
+//     std::ofstream outFile("database/Flights.json");
+//     outFile << jArray.dump(4);
+// }
 
 // ---------------- Display all flights ----------------
 void FlightSystem::displayFlights() const {

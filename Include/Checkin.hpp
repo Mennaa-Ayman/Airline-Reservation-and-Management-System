@@ -7,9 +7,16 @@
 
 #include "Reservation.hpp"
 #include "json.hpp"
+#include "Flight.hpp"
+#include "User.hpp"
 
 class CheckinSystem {
+private:
+    ReservationSystem& reservationSystem;
 public:
+
+    CheckinSystem(ReservationSystem& rs) : reservationSystem(rs) {}
+    ~CheckinSystem();
 
     // Airport check-in process
     bool airportCheckIn(int reservationId);

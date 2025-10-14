@@ -8,7 +8,7 @@
         ],
         "departureTime": "2025-10-03",
         "destination": "Paris",
-        "flightNumber": 10,
+        "flightNumber": 100,
         "origin": "Cairo",
         "status": "scheduled"
     },
@@ -18,8 +18,18 @@
         "crewIDs": [],
         "departureTime": "2025-10-06",
         "destination": "London",
-        "flightNumber": 10,
+        "flightNumber": 101,
         "origin": "New York",
         "status": "delayed"
+    },
+    {
+        "aircraftModel": "Boeing 737",
+        "arrivalTime": "2025-11-02",
+        "crewIDs": [],
+        "departureTime": "2025-11-01",
+        "destination": "America",
+        "flightNumber": 100,
+        "origin": "Egypt",
+        "status": "scheduled"
     }
 ]

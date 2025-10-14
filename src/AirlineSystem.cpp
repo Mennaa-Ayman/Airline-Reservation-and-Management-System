@@ -2,8 +2,34 @@
 
 // Constructor
 AirlineSystem::AirlineSystem() 
-    :userSystem(), flightSystem(), reservationSystem(flightSystem, userSystem) {
+    :userSystem(), flightSystem(), reservationSystem(flightSystem, userSystem), 
+     checkinSystem(reservationSystem) {}
+
+AirlineSystem::~AirlineSystem() {
+    std::cout << "Destroying AirlineSystem\n";
+    reservations.clear(); 
+    currentUser.reset();   
+}
+
+ReservationSystem::~ReservationSystem() {
+    std::cout << "Destroying ReservationSystem\n";
+}
+
+CheckinSystem::~CheckinSystem() {
+    std::cout << "Destroying CheckinSystem\n";
+}
+
+UserSystem::~UserSystem() {
+    std::cout << "Destroying UserSystem\n";
+}
+
+FlightSystem::~FlightSystem() {
+    std::cout << "Destroying FlightSystem\n";
+}
+Reservation::~Reservation() {
+     std::cout << "Destroying Reservation " << reservationId << "\n"; 
     }
+
 
 // ------------------------------- Hash Password ------------------------------- //
 std::string getPasswordInput() {
@@ -202,9 +228,9 @@ void AirlineSystem::agentLoop() {
         std::cin >> choice;
 
         switch (choice) {
-            case 1: /* agent_BookFlight(); */ break;
-            case 2: /* agent_RemoveBooking(); */ break;
-            case 3: /* agent_ModifyBooking(); */ break;
+            case 1: agent_BookFlight();  break;
+            case 2:  agent_RemoveBooking(); break;
+            case 3:  agent_ModifyBooking();  break;
             case 4: std::cout << "Logging out...\n"; break;
             default: std::cout << "Invalid choice. Please try again.\n";
         }

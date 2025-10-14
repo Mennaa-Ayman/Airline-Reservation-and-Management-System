@@ -76,17 +76,6 @@ ReservationSystem::ReservationSystem(FlightSystem& fs, UserSystem& us)
         auto passenger = userSystem.getPassengerById(pId);
         auto flight = flightSystem.getFlightByNumber(flightNum);
 
-        // if (!passenger) {
-        //     std::cout << "Skipping reservation " << resId
-        //               << " (Passenger ID " << pId << " not found)" << std::endl;
-        //     continue;
-        // }
-        // if (!flight) {
-        //     std::cout << "Skipping reservation " << resId
-        //               << " (Flight number " << flightNum << " not found)" << std::endl;
-        //     continue;
-        // }
-
         reservations.push_back(std::make_shared<Reservation>(
             resId, passenger, flight, seatNum, method, details, amount));
     }
@@ -111,7 +100,7 @@ void ReservationSystem::displayReservations(int p_id) const {
 
     std::cout<< "You Reservations: " << std::endl;
     for (const auto& reservation : reservations) {
-        if (reservation->passenger->getId() == p_id) {
+        if (reservation->getPassenger()->getId() == p_id) {
             found = true;
             std::cout << count++ << ". ";
             reservation->displayReservation();
@@ -134,22 +123,46 @@ void ReservationSystem::cancelReservation(int passengerId){
   std::cout << "Enter your Reservation ID: ";
     int resId; std::cin >> resId;
     for (auto it = reservations.begin(); it != reservations.end(); ++it) {
-        if ((*it)->getReservationId() == resId && (*it)->passenger->getId() == passengerId) {
+        if ((*it)->getReservationId() == resId && (*it)->getPassenger()->getId() == passengerId) {
             (*it)->cancelReservation();
             reservations.erase(it);
             std::cout << "Cancellation successful for Reservation ID: " << resId << std::endl;
+
+    // ---- Update JSON file ----
+    std::ifstream inFile("Database/Reservations.json");
+    nlohmann::json j; 
+    inFile >> j;
+    inFile.close();
+
+    // Remove the reservation from JSON
+    auto &arr = j;
+    for (auto jsonIt = arr.begin(); jsonIt != arr.end(); ++jsonIt) {
+        if ((*jsonIt)["reservationId"] == resId) {
+            arr.erase(jsonIt);
+            break;
+        }
+    }
+     std::ofstream outFile("Database/Reservations.json");
+            if (!outFile.is_open()) {
+                std::cerr << "Error writing to Reservations.json\n";
+                return;
+            }
+            outFile << std::setw(4) << j << std::endl;
+            outFile.close();
+
             return;
         }
     }
     std::cout << "Reservation ID: " << resId << " not found or does not belong to you.\n";
+
 }
 
 // ---------------------- Check Reservation --------------------- //
 std::optional<std::pair<std::string, std::string>> ReservationSystem::
     checkReservation(const int& p_id, const int& r_id){
     for(const auto& reservation : reservations){
-        if(reservation->getReservationId() == r_id && reservation->passenger->getId() == p_id){
-            return std::make_optional(std::make_pair(reservation->flight->getFlightDetails(), std::to_string(reservation->seatNum)));
+        if(reservation->getReservationId() == r_id && reservation->getPassenger()->getId() == p_id){
+            return std::make_optional(std::make_pair(reservation->getFlight()->getFlightDetails(), std::to_string(reservation->getSeatNo())));
         }
     }
     return std::nullopt;
@@ -158,17 +171,28 @@ std::optional<std::pair<std::string, std::string>> ReservationSystem::
 // ----------------------------- Book by Agent  ---------------------------------- //
 void ReservationSystem::BookByAgent(){
     int passengerId, flightNum, seatNum, amount;
-    std::string method, details;
+    std::string method, details, input;
+
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     std::cout << "Enter Passenger ID: ";
-    std::cin >> passengerId;
+    std::getline(std::cin, input);
+    try {
+        passengerId = std::stoi(input);
+    } catch (...) {
+        std::cout << "Invalid Passenger ID.\n";
+        return;
+    }
     auto passenger = userSystem.getPassengerById(passengerId);
     if (!passenger) {
         std::cout << "Passenger not found.\n";
         return;
     }
+
     std::cout << "Enter Flight Number: ";
-    std::cin >> flightNum;
+    std::getline(std::cin, input);
+        flightNum = std::stoi(input);
+
     auto flight = flightSystem.getFlightByNumber(flightNum);
     if (!flight) {
         std::cout << "Flight not found.\n";
@@ -176,31 +200,99 @@ void ReservationSystem::BookByAgent(){
     }
 
     std::cout << "Enter Seat Number: ";
-    std::cin >> seatNum;
+    std::getline(std::cin, input);
+    seatNum = std::stoi(input);
+
     std::cout << "Enter Payment Method: ";
-    std::cin >> method;
+    std::getline(std::cin, method);
+
     std::cout << "Enter Payment Details: ";
-    std::cin >> details;
+    std::getline(std::cin, details);
+
     std::cout << "Enter Amount: ";
-    std::cin >> amount;
+    std::getline(std::cin, input);
+    amount = std::stoi(input);
 
     int newReservationId = ++Reservation::reservationCount;
     auto reservation = std::make_shared<Reservation>(newReservationId, passenger, flight, seatNum, method, details, amount);
     reservations.push_back(reservation);
     reservation->confirmReservation();
     std::cout << "Booking completed.\n";
+
+    std::ifstream inFile("Database/Reservations.json");
+    nlohmann::json j;
+if (inFile.is_open()) {
+    inFile >> j;
+    inFile.close();
+} else {
+    std::cout << "Failed to open Reservations.json for reading.\n";
+    return;
+}
+
+// 2. Add the new reservation
+nlohmann::json newRes = {
+    {"reservationId", newReservationId},
+    {"passengerid", passenger->getId()},
+    {"flightNumber", flight->getFlightNo()},
+    {"seatNumber", seatNum},
+    {"checkIn", "not yet"},
+     {"payment", {
+        {"method", method},
+        {"details", details},
+        {"amount", amount}
+    }}
+};
+
+j.push_back(newRes);
+
+// 3. Write back to the file
+std::ofstream outFile("Database/Reservations.json");
+if (outFile.is_open()) {
+    outFile << j.dump(4);
+    outFile.close();
+    std::cout << "Reservation saved to file.\n";
+} else {
+    std::cout << "Failed to open Reservations.json for writing.\n";
+}
 }
 
 // ----------------------------- Remove booking  ---------------------------------- //
 // Cancel reservation as booking agent (can cancel any reservation)
 void ReservationSystem::removeBooking() {
     std::cout << "Enter Reservation ID to cancel: ";
-    int resId; std::cin >> resId;
+    int resId;
+    std::cin >> resId;
+
     for (auto it = reservations.begin(); it != reservations.end(); ++it) {
         if ((*it)->getReservationId() == resId) {
+            // Cancel and remove from memory
             (*it)->cancelReservation();
             reservations.erase(it);
             std::cout << "Cancellation successful for Reservation ID: " << resId << std::endl;
+
+            // Now update the JSON file
+            std::ifstream inFile("Database/Reservations.json");
+
+            nlohmann::json j;
+            inFile >> j;
+            inFile.close();
+
+            // Remove the reservation from JSON
+            auto &arr = j;
+            for (auto jsonIt = arr.begin(); jsonIt != arr.end(); ++jsonIt) {
+                if ((*jsonIt)["reservationId"] == resId) {
+                    arr.erase(jsonIt);
+                    break;
+                }
+            }
+            // Write back to file
+            std::ofstream outFile("Database/Reservations.json");
+            if (!outFile.is_open()) {
+                std::cerr << "Error writing to Reservations.json\n";
+                return;
+            }
+            outFile << std::setw(4) << j << std::endl;
+            outFile.close();
             return;
         }
     }
@@ -210,16 +302,47 @@ void ReservationSystem::removeBooking() {
 // ----------------------------- Modify booking  ---------------------------------- //
 void ReservationSystem::modifyBooking() {
     std::cout << "Enter Reservation ID to modify: ";
-    int resId; std::cin >> resId;
+    int resId;
+    std::cin >> resId;
+
     std::cout << "Enter new Seat Number: ";
-    int newSeat; std::cin >> newSeat;
+    int newSeat;
+    std::cin >> newSeat;
 
     for (const auto& reservation : reservations) {
         if (reservation->getReservationId() == resId) {
+            // Modify the reservation in memory
             reservation->modifyReservation(resId, newSeat);
             std::cout << "Modification successful for Reservation ID: " << resId << std::endl;
+
+            // ---- Update JSON file ----
+            std::ifstream inFile("Database/Reservations.json");
+
+            nlohmann::json j;
+            inFile >> j;
+            inFile.close();
+
+            // Find and update the matching reservation
+            for (auto& item : j) {
+                if (item["reservationId"] == resId) {
+                    item["seatNumber"] = newSeat;
+                    break;
+                }
+            }
+
+            // Write updated JSON back to file
+            std::ofstream outFile("Database/Reservations.json");
+            if (!outFile.is_open()) {
+                std::cerr << "Error writing to Reservations.json\n";
+                return;
+            }
+
+            outFile << std::setw(4) << j << std::endl;
+            outFile.close();
+
             return;
         }
     }
+
     std::cout << "Reservation ID: " << resId << " not found.\n";
 }

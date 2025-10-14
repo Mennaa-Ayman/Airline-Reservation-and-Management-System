@@ -17,9 +17,9 @@ private:
     UserSystem userSystem;
     FlightSystem flightSystem;
     AircraftsSystem aircraftSystem;
+    ReservationSystem reservationSystem;
     CheckinSystem checkinSystem;
     
-    ReservationSystem reservationSystem;
     std::shared_ptr<User> currentUser=nullptr;
 
 
@@ -29,13 +29,13 @@ private:
 public:
     AirlineSystem();
     int loginMenu();
+    ~AirlineSystem();
 
 //==================== Admin Operations ===================== //
     void adminLoop();
     void admin_ManageFligts();
     void admin_ManageAircrafts();
     void admin_ManageUsers();
-    void admin_UserOperations(int operation);
     void admin_GenerateReports();
 
 // ================= Passenger Operations ================= //

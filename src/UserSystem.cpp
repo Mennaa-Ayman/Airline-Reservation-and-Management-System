@@ -40,16 +40,6 @@ void UserSystem::displayUsers() const{
     }
 }
 
-// --------------------------- Destructor --------------------------- //
-UserSystem::~UserSystem(){
-    nlohmann::json jArray = nlohmann::json::array();
-    for(auto& user: users){
-        jArray.push_back(user->getUserJson());
-    }
-    std::ofstream outFile("database/Users.json");
-    outFile << jArray.dump(4);
-}
-
 // ------------------------------- Current user ------------------------------- //
 std::shared_ptr <User> UserSystem::getCurrentUser(const std::string& email){
     for(const auto& user: users){

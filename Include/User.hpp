@@ -102,6 +102,7 @@ public:
         loyaltyPoints += points;
     }
     int getLoyaltyPoints() const { return loyaltyPoints; }
+    
     LoyaltyTier getLoyaltyTier() const { return loyaltyTier; }
     void updateLoyaltyTier();
     

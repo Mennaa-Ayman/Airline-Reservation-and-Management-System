@@ -61,6 +61,15 @@ public:
     int getFlightNo(){
         return flightNumber;
     }
+    std::string getOrigin(){
+        return origin;
+    }
+    std::string getDestination(){
+        return destination;
+    }
+    timeType getDepartureTime() {
+        return departureTime;
+    }
 
     bool isFlightMatch(const std::string& orgi, const std::string& desti, const timeType& time) const;
     void changeStatus(FlightStatus newStatus);

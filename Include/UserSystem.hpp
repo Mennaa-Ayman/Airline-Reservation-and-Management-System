@@ -1,7 +1,7 @@
 #ifndef USERSYSTEM_HPP
 #define USERSYSTEM_HPP
 
-#include "../Include/User.hpp"
+#include "User.hpp"
 #include <iostream>
 #include <fstream>
 #include <memory>

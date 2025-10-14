@@ -2,7 +2,7 @@
 
 
 bool CheckinSystem::airportCheckIn(int reservationId) {
- std::ifstream file("reservation.json");
+ std::ifstream file("Database/Reservations.json");
     if (!file.is_open()) {
         std::cout << "Could not open reservation.json file.\n";
         return false;
@@ -22,7 +22,7 @@ bool CheckinSystem::airportCheckIn(int reservationId) {
     }
 
     if (updated) {
-        std::ofstream outFile("reservation.json");
+        std::ofstream outFile("Database/Reservations.json");
         outFile << reservationsJson.dump(4);
         outFile.close();
         std::cout << "Airport check-in completed for reservation ID: " << reservationId << std::endl;
@@ -34,33 +34,34 @@ bool CheckinSystem::airportCheckIn(int reservationId) {
 }
 
 void CheckinSystem::generateBoardingPass(int reservationId) const {
-    std::ifstream file("reservation.json");
-    if (!file.is_open()) {
-        std::cout << "Could not open reservation.json file.\n";
+    auto reservation = reservationSystem.getReservationById(reservationId);
+
+    if (!reservation) {
+        std::cout << "Reservation ID " << reservationId << " not found.\n";
         return;
     }
 
-    nlohmann::json reservationsJson;
-    file >> reservationsJson;
-    file.close();
+    auto passenger = reservation->getPassenger();
+    auto flight = reservation->getFlight();
 
-    for (const auto& res : reservationsJson) {
-        if (res["reservationId"] == reservationId) {
-            std::cout << "\n--- Boarding Pass ---\n";
-            std::cout << "Passenger: " << res.value("passengerName", "N/A") << "\n";
-            std::cout << "Flight Number: " << res.value("flightNumber", "N/A") << "\n";
-            std::cout << "Gate: " << res.value("gate", "N/A") << "\n";
-            std::cout << "Seat: " << res.value("seatNum", "N/A") << "\n";
-            std::cout << "Boarding Time: " << res.value("boardingTime", "N/A") << "\n";
-            std::cout << "---------------------\n";
-            return;
-        }
-    }
-    std::cout << "Reservation ID " << reservationId << " not found.\n";
+    if (!passenger || !flight) {
+        std::cout << "Error: Passenger or Flight information missing.\n";
+        return;
+}
+
+    std::cout << "\n--- Boarding Pass ---\n";
+    std::cout << "Passenger: " << passenger->getUserName() << "\n";
+    std::cout << "Flight Number: " << flight->getFlightNo() << "\n";
+    std::cout << "From: " << flight->getOrigin() << "\n";
+    std::cout << "To: " << flight->getDestination() << "\n";
+    std::cout << "Seat: " << reservation->getSeatNo() << "\n";
+    std::cout << "Boarding Time: " << formatDateTime(flight->getDepartureTime()) << "\n";
+    std::cout << "---------------------\n";
 }
 
 void CheckinSystem::displayCheckinStatus(int reservationId) const {
-    std::ifstream file("reservation.json");
+    auto reservation = reservationSystem.getReservationById(reservationId);
+    std::ifstream file("Database/Reservations.json");
     if (!file.is_open()) {
         std::cout << "Could not open reservation.json file.\n";
         return;
@@ -74,10 +75,9 @@ void CheckinSystem::displayCheckinStatus(int reservationId) const {
         if (res["reservationId"] == reservationId) {
             std::cout << "Check-in status for reservation ID " << reservationId << ":\n";
             std::cout << "  Status: Checked In\n";
-            std::cout << "  Gate: " << res.value("gate", "N/A") << "\n";
-            std::cout << "  Seat: " << res.value("seatNum", "N/A") << "\n";
-            std::cout << "  Boarding Time: " << res.value("boardingTime", "N/A") << "\n";
-            std::cout << "  Flight Number: " << res.value("flightNumber", "N/A") << "\n";
+            std::cout << "  Seat: " << reservation->getSeatNo() << "\n";
+            std::cout << "  Flight Number: " << reservation->flight->getFlightNo() << "\n";
+            std::cout << "  Boarding Time: " << formatDateTime(reservation->flight->getDepartureTime()) << "\n";
             return;
         }
     }
