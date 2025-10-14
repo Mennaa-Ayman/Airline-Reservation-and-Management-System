@@ -1,0 +1,88 @@
+@startuml
+' Main system class
+class AirlineSystem {
+  +userLoop()
+}
+
+' User management
+class UserSystem {
+  +addUser()
+  +removeUser()
+  +findUser()
+}
+class User {
+  +userId: string
+  +name: string
+  +role: string
+}
+
+' Flight management
+class FlightSystem {
+  +addFlight()
+  +removeFlight()
+  +findFlight()
+}
+class Flight {
+  +flightNumber: string
+  +origin: string
+  +destination: string
+  +aircraftId: string
+}
+
+' Aircraft management
+class AircraftsSystem {
+  +addAircraft()
+  +removeAircraft()
+  +findAircraft()
+}
+class Aircraft {
+  +aircraftId: string
+  +model: string
+  +capacity: int
+}
+
+' Reservation management
+class ReservationSystem {
+  +addReservation()
+  +removeReservation()
+  +findReservation()
+}
+class Reservation {
+  +reservationId: string
+  +flightNumber: string
+  +passengerId: string
+  +seatNumber: string
+  +checkIn: string
+  +payment: Payment
+}
+class Payment {
+  +amount: double
+  +method: string
+  +details: string
+}
+
+' Check-in and reporting
+class CheckinSystem {
+  +checkInPassenger()
+}
+class Reports {
+  +generateReport()
+}
+
+' Relationships
+AirlineSystem --> UserSystem
+AirlineSystem --> FlightSystem
+AirlineSystem --> AircraftsSystem
+AirlineSystem --> ReservationSystem
+AirlineSystem --> CheckinSystem
+AirlineSystem --> Reports
+
+UserSystem --> User
+FlightSystem --> Flight
+AircraftsSystem --> Aircraft
+ReservationSystem --> Reservation
+Reservation --> Payment
+CheckinSystem --> Reservation
+Reports --> Reservation
+
+@enduml
