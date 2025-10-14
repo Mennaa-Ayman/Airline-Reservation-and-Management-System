@@ -1,0 +1,138 @@
+@startuml
+' Main system class
+class AirlineSystem {
+  +userLoop()
+}
+
+' Enums
+enum Role {
+  admin
+  passenger
+  agent
+  none
+}
+
+enum LoyaltyTier {
+  Basic
+  Silver
+  Gold
+  Platinum
+}
+
+' User management
+class UserSystem {
+  +addUser()
+  +removeUser()
+  +findUser()
+}
+
+abstract class User {
+  -id: int
+  -userName: string
+  -email: string
+  -password: string
+  #role: Role
+  +getId(): int
+  +getUserName(): string
+  +getEmail(): string
+  +getRole(): Role
+  +getpassword(): string
+  +getUserJson(): nlohmann::json
+  +checkPassword(input: string): bool
+  +displayUser(): void
+  {abstract} +checkAccessLevel(role: Role): bool
+}
+
+class Administrator {
+  +checkAccessLevel(role: Role): bool
+}
+
+class BookingAgent {
+  +checkAccessLevel(role: Role): bool
+}
+
+class Passenger {
+  -loyaltyPoints: int
+  -loyaltyTier: LoyaltyTier
+  +checkAccessLevel(role: Role): bool
+  +addLoyaltyPoints(points: int): void
+  +getLoyaltyPoints(): int
+  +getLoyaltyTier(): LoyaltyTier
+  +updateLoyaltyTier(): void
+}
+
+' Flight management
+class FlightSystem {
+  +addFlight()
+  +removeFlight()
+  +findFlight()
+}
+class Flight {
+  +flightNumber: string
+  +origin: string
+  +destination: string
+  +aircraftId: string
+}
+
+' Aircraft management
+class AircraftsSystem {
+  +addAircraft()
+  +removeAircraft()
+  +findAircraft()
+}
+class Aircraft {
+  +aircraftId: string
+  +model: string
+  +capacity: int
+}
+
+' Reservation management
+class ReservationSystem {
+  +addReservation()
+  +removeReservation()
+  +findReservation()
+}
+class Reservation {
+  +reservationId: string
+  +flightNumber: string
+  +passengerId: string
+  +seatNumber: string
+  +checkIn: string
+  +payment: Payment
+}
+class Payment {
+  +amount: double
+  +method: string
+  +details: string
+}
+
+' Check-in and reporting
+class CheckinSystem {
+  +checkInPassenger()
+}
+class Reports {
+  +generateReport()
+}
+
+' Relationships
+AirlineSystem --> UserSystem
+AirlineSystem --> FlightSystem
+AirlineSystem --> AircraftsSystem
+AirlineSystem --> ReservationSystem
+AirlineSystem --> CheckinSystem
+AirlineSystem --> Reports
+
+UserSystem --> User
+User <|-- Administrator
+User <|-- BookingAgent
+User <|-- Passenger
+User --> Role
+Passenger --> LoyaltyTier
+FlightSystem --> Flight
+AircraftsSystem --> Aircraft
+ReservationSystem --> Reservation
+Reservation --> Payment
+CheckinSystem --> Reservation
+Reports --> Reservation
+
+@enduml

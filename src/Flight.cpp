@@ -205,16 +205,6 @@ FlightSystem::FlightSystem() {
     }
 }
 
-// -------------------- Destructor : Saves flight data to JSON file -------------------- //
-// FlightSystem::~FlightSystem() {
-//     nlohmann::json jArray = nlohmann::json::array();
-//     for (auto& flight : flights) {
-//         jArray.push_back(flight->getFlightJson());
-//     }
-//     std::ofstream outFile("database/Flights.json");
-//     outFile << jArray.dump(4);
-// }
-
 // ---------------- Display all flights ----------------
 void FlightSystem::displayFlights() const {
     std::cout << "Flights Available:\n";
@@ -222,6 +212,7 @@ void FlightSystem::displayFlights() const {
     for (auto& flight : flights) {
         std::cout << i++ << ". ";
         flight->getFlightDetails();
+        std::cout << "-----------------------\n";
     }
 }
 
@@ -481,7 +472,7 @@ std::shared_ptr<Flight> FlightSystem::updateFlight() {
     std::cin >> flightNum;
     auto flight = getFlightByNumber(flightNum);
     if (!flight)
-        throw std::runtime_error("Flight not found");
+        std::cout << "Flight not found. Flight ID maybe incorrect.\n";
 
     std::cout << "Select update option:\n"
               << "1. Flight Details\n"

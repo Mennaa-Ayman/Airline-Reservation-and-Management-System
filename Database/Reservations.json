@@ -1,55 +1,7 @@
 [
     {
-        "checkIn": "checked In",
-        "flightNumber": 100,
-        "passengerid": 32,
-        "payment": {
-            "amount": 1800,
-            "details": "mastercard **** 4321",
-            "method": "debit_card"
-        },
-        "reservationId": 1,
-        "seatNumber": 12
-    },
-    {
         "checkIn": "Not yet",
         "flightNumber": 100,
-        "passengerid": 32,
-        "payment": {
-            "amount": 2500,
-            "details": "PP-2025-0001",
-            "method": "paypal"
-        },
-        "reservationId": 2,
-        "seatNumber": 1
-    },
-    {
-        "checkIn": "Not yet",
-        "flightNumber": 100,
-        "passengerid": 32,
-        "payment": {
-            "amount": 2100,
-            "details": "paid at counter",
-            "method": "cash"
-        },
-        "reservationId": 3,
-        "seatNumber": 2
-    },
-    {
-        "checkIn": "Not yet",
-        "flightNumber": 101,
-        "passengerid": 31,
-        "payment": {
-            "amount": 1500,
-            "details": "promo SPRING25",
-            "method": "voucher"
-        },
-        "reservationId": 4,
-        "seatNumber": 20
-    },
-    {
-        "checkIn": "checked In",
-        "flightNumber": 101,
         "passengerid": 31,
         "payment": {
             "amount": 2000,
@@ -57,6 +9,42 @@
             "method": "Visa"
         },
         "reservationId": 5,
+        "seatNumber": 7
+    },
+    {
+        "checkIn": "not yet",
+        "flightNumber": 100,
+        "passengerid": 34,
+        "payment": {
+            "amount": 5000,
+            "details": "with a 10% voucher",
+            "method": "Visa"
+        },
+        "reservationId": 4,
+        "seatNumber": 15
+    },
+    {
+        "checkIn": "not yet",
+        "flightNumber": 100,
+        "passengerid": 34,
+        "payment": {
+            "amount": 5000,
+            "details": "with a 10% voucher",
+            "method": "Visa"
+        },
+        "reservationId": 2,
+        "seatNumber": 20
+    },
+    {
+        "checkIn": "not yet",
+        "flightNumber": 100,
+        "passengerid": 34,
+        "payment": {
+            "amount": 4000,
+            "details": "paid on the counter",
+            "method": "Cash"
+        },
+        "reservationId": 3,
         "seatNumber": 15
     }
 ]

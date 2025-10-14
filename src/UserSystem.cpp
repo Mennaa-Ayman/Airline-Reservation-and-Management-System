@@ -65,7 +65,7 @@ void UserSystem::addUser(){
         std::cout << "Enter name: ";            std::cin >> name;
         std::cout << "Enter email: ";           std::cin >> email;
         if(!isEmailUnique(email)){
-            throw std::runtime_error("Email already exists. Please use a different email.");
+            std::cout << "Email already exists. Please use a different email.";
             continue;
         }
     std::cout << "Enter password: ";        std::cin >> password;
@@ -120,7 +120,7 @@ void UserSystem::removeUser() {
         std::ofstream outFile("database/Users.json");
         outFile << jArray.dump(4);
     } 
-    else throw std::runtime_error("User ID not found.");
+    else std::cout << "User ID not found.";
 }
 
 // --------------------------------------- Update user --------------------------------------- //

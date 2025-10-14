@@ -151,7 +151,11 @@ void AircraftsSystem::addAircraft(){
     int capacity;
 
         std::cout << "Enter aircraft model: ";
-        std::cin >> model;
+        std::getline(std::cin >> std::ws, model); // Use std::ws to consume any leading whitespace
+         if (model.empty()) {
+            std::cout << "Aircraft model cannot be empty. Please try again.\n";
+            return;
+        }
         std::cout << "Enter aircraft capacity: ";
         std::cin >> capacity;
 
