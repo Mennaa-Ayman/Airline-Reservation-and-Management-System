@@ -1,0 +1,79 @@
+[
+    {
+        "email": "menna@gmail.com",
+        "id": 13,
+        "name": "Menna",
+        "password": "150704",
+        "role": "admin"
+    },
+    {
+        "email": "admin011@gmail.com",
+        "id": 11,
+        "name": "Menna",
+        "password": "150704",
+        "role": "admin"
+    },
+    {
+        "email": "charlie@gmail.com",
+        "id": 12,
+        "name": "Charlie",
+        "password": "182",
+        "role": "admin"
+    },
+    {
+        "email": "omar@email.com",
+        "id": 21,
+        "name": "Omar",
+        "password": "1234567",
+        "role": "agent"
+    },
+    {
+        "email": "agent021@gmail.com",
+        "id": 22,
+        "name": "Omar",
+        "password": "1234",
+        "role": "agent"
+    },
+    {
+        "email": "ahmed@gmail.com",
+        "id": 32,
+        "name": "ahmed",
+        "password": "182",
+        "role": "passenger"
+    },
+    {
+        "email": "passenger031@gmail.com",
+        "id": 31,
+        "name": "ahmed",
+        "password": "1234",
+        "role": "passenger"
+    },
+    {
+        "email": "hassan@email.com",
+        "id": 32,
+        "name": "Hassan",
+        "password": "1234",
+        "role": "passenger"
+    },
+    {
+        "email": "malak@email.com",
+        "id": 34,
+        "name": "Malak",
+        "password": "1234",
+        "role": "passenger"
+    },
+    {
+        "email": "Malak@email.com",
+        "id": 35,
+        "name": "Malak",
+        "password": "1234",
+        "role": "agent"
+    },
+    {
+        "email": "menna15@gmail.com",
+        "id": 36,
+        "name": "Menna",
+        "password": "15070405",
+        "role": "passenger"
+    }
+]

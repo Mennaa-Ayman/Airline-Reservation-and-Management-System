@@ -1,0 +1,50 @@
+[
+    {
+        "checkIn": "Not yet",
+        "flightNumber": 100,
+        "passengerid": 31,
+        "payment": {
+            "amount": 2000,
+            "details": "applied a voucher of 20%",
+            "method": "Visa"
+        },
+        "reservationId": 5,
+        "seatNumber": 7
+    },
+    {
+        "checkIn": "not yet",
+        "flightNumber": 100,
+        "passengerid": 34,
+        "payment": {
+            "amount": 5000,
+            "details": "with a 10% voucher",
+            "method": "Visa"
+        },
+        "reservationId": 4,
+        "seatNumber": 15
+    },
+    {
+        "checkIn": "not yet",
+        "flightNumber": 102,
+        "passengerid": 34,
+        "payment": {
+            "amount": 5000,
+            "details": "with a 10% voucher",
+            "method": "Visa"
+        },
+        "reservationId": 2,
+        "seatNumber": 20
+    },
+    {
+        "checkIn": "not yet",
+        "flightNumber": 101,
+        "passengerid": 34,
+        "payment": {
+            "amount": 4000,
+            "details": "paid on the counter",
+            "method": "Cash"
+        },
+        "reservationId": 3,
+        "seatNumber": 15
+    }
+]

@@ -1,0 +1,35 @@
+[
+    {
+        "aircraftModel": "Boeing 737",
+        "arrivalTime": "2025-10-05",
+        "crewIDs": [
+            15,
+            18
+        ],
+        "departureTime": "2025-10-03",
+        "destination": "Paris",
+        "flightNumber": 100,
+        "origin": "Cairo",
+        "status": "onTime"
+    },
+    {
+        "aircraftModel": "Boeing 737",
+        "arrivalTime": "2025-11-02",
+        "crewIDs": [],
+        "departureTime": "2025-11-01",
+        "destination": "Tunis",
+        "flightNumber": 102,
+        "origin": "England",
+        "status": "canceled"
+    },
+    {
+        "aircraftModel": "Boeing 737",
+        "arrivalTime": "2025-11-02",
+        "crewIDs": [],
+        "departureTime": "2025-11-01",
+        "destination": "USA",
+        "flightNumber": 105,
+        "origin": "Egypt",
+        "status": "scheduled"
+    }
+]
